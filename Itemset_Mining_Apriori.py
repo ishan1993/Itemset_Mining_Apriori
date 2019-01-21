@@ -40,39 +40,44 @@ def gen_fk(ck):
             fk.append(elem)
     return fk
     
-def gen_l(f):
-    f_items=[]
-    for elem in f:
-        f_items = f_items + elem[1:]
-    return list(combinations(f_items, len(f[0])))
-    
 def gen_ckplus1(fk,x):
-    print("fk: " + str(len(fk)))
+    print("\nfk: " + str(len(fk)))
     f_items = []
     for elem in fk:
-        f_items.append(list(elem[1:]))
-    print("f_items: " + str(len(f_items)))
-    lkplus1 = gen_l(fk)
-    print("lkplus1: " + str(len(lkplus1)))
-    ckplus1 = []
+        f_items = f_items + list(elem[1:])
+    print("\nf_items: " + str(len(f_items)))
+    print (f_items[0:5])
+    
+    lkplus1 = list(combinations(f_items, len(f_items[0])+1))
+    print("\nlkplus1: " + str(len(lkplus1)))
+    print(lkplus1[0:5])
+    
     #prune
     for elem in lkplus1:
         raw_list = list(combinations(elem, len(elem)-1))
         for cat_list in raw_list:
-            l = list(cat_list)
-            l = l[0:len(l)-2]
-            if l not in f_items:
-                lkplus1.remove(elem)
-                break
+            if cat_list:
+                l = list(cat_list)
+                l = l[0:len(l)-2]
+                if l not in f_items:
+                    lkplus1.remove(elem)
+                    break
+    
     #dbscan
-    print("lkplus1: " + str(len(lkplus1)))
+    ckplus1 = []
+    print("\nlkplus1 after pruning: " + str(len(lkplus1)))
+    print(lkplus1[0:5])
     for elem in lkplus1:
+        raw_list = []
+        for item in elem:
+            raw_list.append(item[0])
         sup = 0
         for cat_list in tdb:
-            if (all(i in cat_list for i in list(elem))):
+            if (all(i in cat_list for i in raw_list)):
                 sup = sup + 1
         ckplus1.append([sup]+list(elem))
-    print("ckplus1: " + str(len(ckplus1)))
+    print("\nckplus1: " + str(len(ckplus1)))
+    print(ckplus1[0:5])
     return ckplus1
             
 c1 = gen_c1()
@@ -82,7 +87,3 @@ print ("k=2")
 c2 = gen_ckplus1(f1,0)
 f2 = gen_fk(c2)
 f = f + f2
-print("k=3")
-c3 = gen_ckplus1(f2,1)
-f3 = gen_fk(c3)
-print f3
