@@ -39,13 +39,5 @@ def gen_fk(ck):
             fk.append(elem)
     return fk
 
-def dbscan(strings,db):
-    sup = 0
-    for elem in strings:
-        for trans in db:
-           sup = sup+1
-    
-    return sup
-
 c1 = gen_c1()
 f1 = gen_fk(c1)
