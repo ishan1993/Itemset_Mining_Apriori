@@ -103,3 +103,7 @@ print("\nf2: " + str(len(f2)))
 print(f2[0:5])
 print ("\n\n\n\nk=3")
 c3 = gen_ckplus1(f2,0)
+f3 = gen_fk(c3)
+f = f + f3
+print("\nf3: " + str(len(f3)))
+print(f3[0:5])
