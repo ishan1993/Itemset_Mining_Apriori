@@ -2,7 +2,6 @@
 
 from itertools import combinations
 minsup = 771
-f = []
 tdb = []
 
 def initial_parse():
@@ -28,16 +27,16 @@ def gen_c1():
         c1.append([sup,elem])
     return c1
     
-def dump_f1(f1):
+def dump_f(f):
     with open('patterns.txt','a') as fw:
-        for elem in f1:
+        for elem in f:
             fw.write(str(elem[0])+":"+elem[1])
             if len(elem) > 2:
                 for cat in elem[2:]:
                     fw.write(";"+cat)
             fw.write("\n")
 
-def dump_f(f):
+def dump_f1(f):
     with open('patterns.txt','a') as fw:
         for elem in f:
             fw.write(str(elem[0])+":"+elem[1]+"\n")
@@ -96,14 +95,16 @@ def gen_ckplus1(fk,x):
 
 c1 = gen_c1()
 f1 = gen_fk(c1)
-f = f + f1
 print("\nf1: " + str(len(f1)))
+print(f1)
+dump_f(f1)
 c2 = gen_ckplus1(f1,0)
 f2 = gen_fk(c2)
-f = f + f2
 print("\nf2: " + str(len(f2)))
+print(f2)
+dump_f(f2)
 c3 = gen_ckplus1(f2,0)
 f3 = gen_fk(c3)
-f = f + f3
 print("\nf3: " + str(len(f3)))
-dump_f(f)
+print(f3)
+dump_f(f3)
