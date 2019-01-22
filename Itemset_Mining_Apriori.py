@@ -3,6 +3,7 @@
 from itertools import combinations
 minsup = 771
 tdb = []
+freq = []
 
 def initial_parse():
     with open('categories.txt') as fp:
@@ -48,7 +49,7 @@ def gen_fk(ck):
             fk.append(elem)
     return fk
     
-def gen_ckplus1(fk,x):
+def gen_ckplus1(fk):
     for elem in fk:
         elem.remove(elem[0])
     f_items = []
@@ -92,19 +93,19 @@ def gen_ckplus1(fk,x):
     print("\nckplus1: " + str(len(ckplus1)))
     return ckplus1
 
-
 c1 = gen_c1()
 f1 = gen_fk(c1)
-print("\nf1: " + str(len(f1)))
-print(f1)
 dump_f(f1)
-c2 = gen_ckplus1(f1,0)
-f2 = gen_fk(c2)
-print("\nf2: " + str(len(f2)))
-print(f2)
-dump_f(f2)
-c3 = gen_ckplus1(f2,0)
-f3 = gen_fk(c3)
-print("\nf3: " + str(len(f3)))
-print(f3)
-dump_f(f3)
+freq.append(f1)
+i = 0
+while 1:
+    c = gen_ckplus1(freq[i])
+    if(len(c) == 0):
+        break
+    f = gen_fk(c)
+    if(len(f) == 0):
+        break
+    print("\nf"+str(i+2)+": " + str(len(f)))
+    dump_f(f)
+    freq.append(f)
+    i = i + 1
