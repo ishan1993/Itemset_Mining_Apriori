@@ -31,6 +31,15 @@ def gen_c1():
 def dump_f1(f1):
     with open('patterns.txt','a') as fw:
         for elem in f1:
+            fw.write(str(elem[0])+":"+elem[1])
+            if len(elem) > 2:
+                for cat in elem[2:]:
+                    fw.write(";"+cat)
+            fw.write("\n")
+
+def dump_f(f):
+    with open('patterns.txt','a') as fw:
+        for elem in f:
             fw.write(str(elem[0])+":"+elem[1]+"\n")
 
 def gen_fk(ck):
@@ -107,3 +116,9 @@ f3 = gen_fk(c3)
 f = f + f3
 print("\nf3: " + str(len(f3)))
 print(f3[0:5])
+print ("\n\n\n\nk=4")
+c3 = gen_ckplus1(f3,0)
+f3 = gen_fk(c4)
+f = f + f4
+print("\nf4: " + str(len(f4)))
+print(f4[0:5])
